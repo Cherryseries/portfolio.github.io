@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My 3D Model Portfolio</title>
+  <style>
+    /* Add some basic styling to the container */
+    #model-container {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <h1>My 3D Model Portfolio</h1>
+  <div id="model-container"></div>
+
+  <!-- Add the Three.js library (you can download it or use a CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+
+  <script>
+    // Create a scene and a camera
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    // Create a renderer and add it to the container
+    const renderer = new THREE.WebGLRenderer();
+    const modelContainer = document.getElementById('model-container');
+    renderer.setSize(modelContainer.clientWidth, modelContainer.clientHeight);
+    modelContainer.appendChild(renderer.domElement);
+
+    // Load the FBX model
+    const loader = new THREE.FBXLoader();
+    loader.load('threemodels\torch.fbx', function (model) {
+      scene.add(model);
+    });
+
+    // Set the camera position
+    camera.position.z = 5;
+
+    // Add some light to the scene
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    scene.add(directionalLight);
+
+    // Function to animate the model
+    function animate() {
+      requestAnimationFrame(animate);
+      // Add any animations or interactions here if needed
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
